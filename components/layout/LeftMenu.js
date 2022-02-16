@@ -23,6 +23,11 @@ function LeftMenu() {
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Registration</span></Link>
             </li>
+            <li className="nav-item active">
+                <Link className="nav-link" to="user">
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Crud API</span></Link>
+            </li>
             <hr className="sidebar-divider"/>
             <div className="sidebar-heading">
                 Interface
