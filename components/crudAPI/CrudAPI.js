@@ -4,85 +4,104 @@ import AddUser from "./AddUser";
 
 const CrudAPI = () => {
   const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    await fetch("https://jsonplaceholder.typicode.com/users")
-        .then((res) => res.json())
-        .then((data) => setUsers(data))
-        .catch((err) => {
-          console.log(err);
-        });
-  };
-
-  const onAdd = async (name, email) => {
-    await fetch("https://jsonplaceholder.typicode.com/users", {
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        email: email,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-        .then((res) => {
-          if (res.status !== 201) {
-            return;
-          } else {
-            return res.json();
-          }
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const fetchData = async () => {
+        await fetch("https://jsonplaceholder.typicode.com/users")
+            .then((response) => response.json())
+            .then((data) => setUsers(data))
+            .catch((error) => console.log(error));
+    };
+    const onAdd = async (name, email) => {
+        await fetch("https://jsonplaceholder.typicode.com/users", {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+                email: email
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
         })
-        .then((data) => {
-          setUsers((users) => [...users, data]);
+            .then((response) => {
+                if (response.status !== 201) {
+                    return;
+                } else {
+                    return response.json();
+                }
+            })
+            .then((data) => {
+                setUsers((users) => [...users, data]);
+            })
+            .catch((error) => console.log(error));
+    };
+
+    const onEdit = async (id, name, email) => {
+        await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                name: name,
+                email: email
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
         })
-        .catch((err) => {
-          console.log(err);
-        });
-  };
+            .then((response) => {
+                if (response.status !== 200) {
+                    return;
+                } else {
+                    return response.json();
+                }
+            })
+            .then((data) => {
+                // setUsers((users) => [...users, data]);
+                const updatedUsers = users.map((user) => {
+                    if (user.id === id) {
+                        user.name = name;
+                        user.email = email;
+                    }
 
+                    return user;
+                });
 
-
-  const onDelete = async (id) => {
-    await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: "DELETE",
-    })
-        .then((res) => {
-          if (res.status !== 200) {
-            return;
-          } else {
-            setUsers(
-                users.filter((user) => {
-                  return user.id !== id;
-                })
-            );
-          }
+                setUsers((users) => updatedUsers);
+            })
+            .catch((error) => console.log(error));
+    };
+    const onDelete = async (id) => {
+        await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+            method: "DELETE"
         })
-        .catch((err) => {
-          console.log(err);
-        });
-  };
-
-  console.log(users);
-  return(
-      <>
-        <AddUser onAdd={onAdd} />
-        <div>
-          { users.map((user) => (
+            .then((response) => {
+                if (response.status !== 200) {
+                    return;
+                } else {
+                    setUsers(
+                        users.filter((user) => {
+                            return user.id !== id;
+                        })
+                    );
+                }
+            })
+            .catch((error) => console.log(error));
+    };
+    return (
+        <div className="App">
+            <h1>Users</h1>
+            <AddUser onAdd={onAdd} />
+            {users.map((user) => (
                 <User
-                  id={user.id}
-                  key={user.id}
-                  name={user.name}
-                  email={user.email}
-                  onUpdate={user.onUpdate}
-                  onDelete={onDelete}
+                    id={user.id}
+                    key={user.id}
+                    name={user.name}
+                    email={user.email}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
                 />
-            ))
-          }
+            ))}
         </div>
-      </>
-  )
+    );
 }
 export default CrudAPI;

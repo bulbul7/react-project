@@ -19,6 +19,11 @@ function LeftMenu() {
                     <span>Dashboard</span></Link>
             </li>
             <li className="nav-item active">
+                <Link className="nav-link" to="todo">
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Todo List</span></Link>
+            </li>
+            <li className="nav-item active">
                 <Link className="nav-link" to="registration">
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Registration</span></Link>
@@ -27,6 +32,26 @@ function LeftMenu() {
                 <Link className="nav-link" to="user">
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Crud API</span></Link>
+            </li>
+            <li className="nav-item active">
+                <Link className="nav-link" to="basictable">
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Basic Table</span></Link>
+            </li>
+            <li className="nav-item active">
+                <Link className="nav-link" to="searchfilter">
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Search Filter</span></Link>
+            </li>
+            <li className="nav-item active">
+                <Link className="nav-link" to="pagination">
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Pagination</span></Link>
+            </li>
+            <li className="nav-item active">
+                <Link className="nav-link" to="controltable">
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Table design</span></Link>
             </li>
             <hr className="sidebar-divider"/>
             <div className="sidebar-heading">
